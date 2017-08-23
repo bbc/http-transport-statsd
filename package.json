@@ -19,6 +19,15 @@
   "engines": {
     "node": ">=4.0.0"
   },
+  "keywords": [
+    "https",
+    "http-transport",
+    "stats",
+    "statistics",
+    "rest",
+    "http",
+    "statsd"
+  ],
   "homepage": "https://github.com/bbc/http-transport-statsd",
   "devDependencies": {
     "eslint": "^2.4.0",
