@@ -1,0 +1,35 @@
+{
+  "name": "@bbc/http-transport-statsd",
+  "version": "1.0.0",
+  "description": "Provides stats for statsD ",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "lint": "eslint .",
+    "coverage": "istanbul cover _mocha -- -R dot"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bbc/http-transport-statsd.git"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/bbc/http-transport-statsd/issues"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "homepage": "https://github.com/bbc/http-transport-statsd",
+  "devDependencies": {
+    "eslint": "^2.4.0",
+    "eslint-config-iplayer-es6": "^1.3.0",
+    "istanbul": "^0.4.1",
+    "mocha": "^2.1.0",
+    "nock": "^9.0.14",
+    "sinon": "^3.2.1",
+    "@bbc/http-transport": "git+https://github.com/bbc/http-transport.git"
+  },
+  "eslintConfig": {
+    "extends": "iplayer-es6"
+  }
+}
