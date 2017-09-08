@@ -27,12 +27,12 @@ npm install --save http-transport-statsd
 
 const url = 'http://example.com/';
 const HttpTransport = require('http-transport');
-const statsPlugin = require('http-transport-statsd');
+const sendStats = require('http-transport-statsd');
 const StatsD = require('node-statsd');
-const stats = new StatsD();
+const statsD = new StatsD();
 
 HttpTransport.createClient()
-      .useGlobal(statsPlugin(stats))
+      .useGlobal(sendStats(statsd))
       .get(url)
       .asBody()
       .then((body) => {
