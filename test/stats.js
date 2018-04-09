@@ -15,15 +15,15 @@ const api = nock(host);
 const path = '/';
 
 function toError() {
-  return (ctx, next) => {
-    return next().then(() => {
-      if (ctx.res.statusCode >= 400) {
-        const err = new Error('something bad happend.');
-        err.statusCode = ctx.res.statusCode;
-        err.headers = ctx.res.headers;
-        throw err;
-      }
-    });
+  return async (ctx, next) => {
+    await next();
+
+    if (ctx.res.statusCode >= 400) {
+      const err = new Error('something bad happend.');
+      err.statusCode = ctx.res.statusCode;
+      err.headers = ctx.res.headers;
+      throw err;
+    }
   };
 }
 
@@ -56,109 +56,99 @@ describe('stats', () => {
     sandbox.restore();
   });
 
-  it('increments counter http.requests for each request', () => {
+  it('increments counter http.requests for each request', async () => {
     api.get('/').reply(200);
 
-    return HttpTransport.createClient()
+    await HttpTransport.createClient()
       .get(url)
       .use(stats(stubbedStats))
-      .asBody()
-      .catch(assert.ifError)
-      .then(() => {
-        sinon.assert.calledWith(stubbedStats.increment, 'http.requests');
-      });
+      .asBody();
+
+    sinon.assert.calledWith(stubbedStats.increment, 'http.requests');
   });
 
-  it('increments counter a request counter with the name of the client if one is provided', () => {
+  it('increments counter a request counter with the name of the client if one is provided', async () => {
     api.get('/').reply(200);
 
-    return HttpTransport.createClient()
+    await HttpTransport.createClient()
       .get(url)
       .use(stats(stubbedStats, 'my-client'))
-      .asBody()
-      .catch(assert.ifError)
-      .then(() => {
-        sinon.assert.calledWith(stubbedStats.increment, 'my-client.requests');
-      });
+      .asBody();
+
+    sinon.assert.calledWith(stubbedStats.increment, 'my-client.requests');
   });
 
-  it('increments a request counter with the name of the client and feed if provided', () => {
+  it('increments a request counter with the name of the client and feed if provided', async () => {
     api.get('/').reply(200);
 
-    return HttpTransport.createClient()
+    await HttpTransport.createClient()
       .get(url)
       .use(stats(stubbedStats, 'my-client', 'feedName'))
-      .asBody()
-      .catch(assert.ifError)
-      .then(() => {
-        sinon.assert.calledWith(stubbedStats.increment, 'my-client.feedName.requests');
-      });
+      .asBody();
+
+    sinon.assert.calledWith(stubbedStats.increment, 'my-client.feedName.requests');
   });
 
-  it('increments counter response for each response', () => {
+  it('increments counter response for each response', async () => {
     api.get('/').reply(200);
 
-    return HttpTransport.createClient()
+    await HttpTransport.createClient()
       .get(url)
       .use(stats(stubbedStats, 'my-client', 'feedName'))
-      .asBody()
-      .catch(assert.ifError)
-      .then(() => {
-        sinon.assert.calledWith(stubbedStats.increment, 'my-client.feedName.responses.200');
-      });
+      .asBody();
+
+    sinon.assert.calledWith(stubbedStats.increment, 'my-client.feedName.responses.200');
   });
 
-  it('increments counter for errors', () => {
+  it('increments counter for errors', async () => {
     api.get('/').reply(400);
 
-    return HttpTransport.createClient()
-      .use(stats(stubbedStats, 'my-client', 'feedName'))
-      .use(toError())
-      .get(url)
-      .asBody()
-      .then(assert.fail)
-      .catch(() => {
-        sinon.assert.calledWith(stubbedStats.increment, 'my-client.feedName.request_errors');
-        sinon.assert.calledOnce(stubbedStats.increment);
-      });
+    try {
+      await HttpTransport.createClient()
+        .use(stats(stubbedStats, 'my-client', 'feedName'))
+        .use(toError())
+        .get(url)
+        .asBody();
+    } catch (err) {
+      sinon.assert.calledWith(stubbedStats.increment, 'my-client.feedName.request_errors');
+      sinon.assert.calledOnce(stubbedStats.increment);
+      return;
+    }
+    assert.fail();
   });
 
-  it('increments .retries', () => {
+  it('increments .retries', async () => {
     const retries = 2;
 
     nockRetries(retries);
     stubbedStats.increment = sinon.spy();
 
-    return HttpTransport.createClient()
+    await HttpTransport.createClient()
       .use(stats(stubbedStats, 'my-client', 'feedName'))
       .use(toError())
       .retry(retries)
       .get(url)
-      .asBody()
-      .then(assert.fail)
-      .catch(() => {
-        const calls = getCallsWith(stubbedStats.increment, 'my-client.feedName.retries');
-        assert.equal(calls, retries);
-      });
+      .asBody();
+
+    const calls = getCallsWith(stubbedStats.increment, 'my-client.feedName.retries');
+    assert.equal(calls, retries);
   });
 
-  it('increments .attempts', () => {
+  it('increments .attempts', async () => {
     const retries = 2;
 
     nockRetries(retries);
     stubbedStats.timing = sinon.spy();
 
-    return HttpTransport.createClient()
+    await HttpTransport.createClient()
       .use(stats(stubbedStats, 'my-client', 'feedName'))
       .use(toError())
       .retry(retries)
       .get(url)
-      .asBody()
-      .then(assert.fail)
-      .catch(() => {
-        sinon.assert.calledWith(stubbedStats.timing, 'my-client.feedName.attempts', 1);
-        sinon.assert.calledWith(stubbedStats.timing, 'my-client.feedName.attempts', 2);
-        sinon.assert.calledWith(stubbedStats.timing, 'my-client.feedName.attempts', 3);
-      });
+      .asBody();
+
+    sinon.assert.calledWith(stubbedStats.timing, 'my-client.feedName.attempts', 1);
+    sinon.assert.calledWith(stubbedStats.timing, 'my-client.feedName.attempts', 2);
+    sinon.assert.calledWith(stubbedStats.timing, 'my-client.feedName.attempts', 3);
   });
 });
