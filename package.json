@@ -40,6 +40,9 @@
     "nock": "^9.0.14",
     "sinon": "^3.2.1"
   },
+  "peerDependencies": {
+    "@bbc/http-transport": "3.x"
+  },
   "eslintConfig": {
     "extends": "iplayer-es6",
     "parserOptions": {
