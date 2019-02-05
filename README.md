@@ -1,3 +1,10 @@
+[![NPM downloads](https://img.shields.io/npm/dm/@bbc/http-transport-statsd.svg?style=flat)](https://npmjs.org/package/@bbc/http-transport-rate-limiter)
+![npm](https://img.shields.io/npm/v/@bbc/http-transport-statsd.svg)
+ ![license](https://img.shields.io/badge/license-MIT-blue.svg) 
+![github-issues](https://img.shields.io/github/issues/bbc/http-transport-statsd.svg)
+![stars](https://img.shields.io/github/stars/bbc/http-transport-statsd.svg)
+![forks](https://img.shields.io/github/forks/bbc/http-transport-statsd.svg)
+
 # http-transport-statsd
 
 > Metrics can be sent to [StatsD](https://github.com/etsy/statsd/) by providing an instance of the [node-statsd](https://github.com/sivy/node-statsd) client:
@@ -29,13 +36,11 @@ const sendStats = require('@bbc/http-transport-statsd');
 const StatsD = require('node-statsd');
 const statsD = new StatsD();
 
-HttpTransport.createClient()
+const body = await HttpTransport.createClient()
       .use(sendStats(statsd)) // send stats for this request
       .get(url)
-      .asBody()
-      .then((body) => {
-        console.log(body);
-      });
+      .asBody();
+console.log(body);
 ```
 
 ## Test
