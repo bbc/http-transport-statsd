@@ -29,13 +29,11 @@ const sendStats = require('@bbc/http-transport-statsd');
 const StatsD = require('node-statsd');
 const statsD = new StatsD();
 
-HttpTransport.createClient()
+const body = await HttpTransport.createClient()
       .use(sendStats(statsd)) // send stats for this request
       .get(url)
-      .asBody()
-      .then((body) => {
-        console.log(body);
-      });
+      .asBody();
+console.log(body);
 ```
 
 ## Test
