@@ -37,8 +37,8 @@
     "lodash": "^4.17.15",
     "mocha": "^5.2.0",
     "nock": "^9.0.14",
-    "sinon": "^7.2.3",
-    "nyc": "^13.3.0"
+    "nyc": "^14.1.1",
+    "sinon": "^7.2.3"
   },
   "peerDependencies": {
     "@bbc/http-transport": "3.x"
