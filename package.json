@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha",
     "lint": "eslint .",
-    "coverage": "istanbul cover _mocha -- -R dot"
+    "coverage": "nyc mocha && nyc report --reporter=html && nyc report --reporter=json-summary"
   },
   "repository": {
     "type": "git",
@@ -34,11 +34,11 @@
     "chai": "^4.1.2",
     "eslint": "^6.1.0",
     "eslint-config-iplayer-es6": "^3.1.0",
-    "istanbul": "^0.4.1",
     "lodash": "^4.17.15",
     "mocha": "^5.2.0",
     "nock": "^9.0.14",
-    "sinon": "^7.2.3"
+    "sinon": "^7.2.3",
+    "nyc": "^13.3.0"
   },
   "peerDependencies": {
     "@bbc/http-transport": "3.x"
