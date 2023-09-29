@@ -1,6 +1,6 @@
 {
   "name": "@bbc/http-transport-statsd",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Provides stats for statsD ",
   "main": "index.js",
   "scripts": {
