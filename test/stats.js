@@ -1,6 +1,5 @@
 'use strict';
 
-const _ = require('lodash');
 const sinon = require('sinon');
 const nock = require('nock');
 const assert = require('chai').assert;
@@ -28,8 +27,8 @@ function toError() {
 }
 
 function nockRetries(retry, opts) {
-  const httpMethod = _.get(opts, 'httpMethod') || 'get';
-  const successCode = _.get(opts, 'successCode') || 200;
+  const httpMethod = opts?.httpMethod || 'get';
+  const successCode = opts?.successCode || 200;
 
   nock.cleanAll();
   api[httpMethod](path).times(retry).reply(500);
