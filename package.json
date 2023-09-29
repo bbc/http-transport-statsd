@@ -41,7 +41,7 @@
     "sinon": "^7.2.3"
   },
   "peerDependencies": {
-    "@bbc/http-transport": "^4.3.0"
+    "@bbc/http-transport": "^3 ^4"
   },
   "eslintConfig": {
     "extends": "iplayer",
