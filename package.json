@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha",
     "lint": "eslint .",
-    "coverage": "nyc mocha && nyc report --reporter=html && nyc report --reporter=json-summary"
+    "coverage": "nyc mocha && nyc report --reporter=html && nyc report --reporter=json-summary",
+    "posttest": "npm run lint"
   },
   "repository": {
     "type": "git",
@@ -30,23 +31,20 @@
   ],
   "homepage": "https://github.com/bbc/http-transport-statsd",
   "devDependencies": {
-    "@bbc/http-transport": "^3.4.2",
+    "@bbc/http-transport": "^4.3.0",
     "chai": "^4.1.2",
-    "eslint": "^6.1.0",
-    "eslint-config-iplayer-es6": "^3.1.0",
+    "eslint": "^8.50.0",
+    "eslint-config-iplayer": "^7.0.0",
     "lodash": "^4.17.15",
     "mocha": "^5.2.0",
-    "nock": "^9.0.14",
+    "nock": "^13.3.3",
     "nyc": "^14.1.1",
     "sinon": "^7.2.3"
   },
   "peerDependencies": {
-    "@bbc/http-transport": "3.x"
+    "@bbc/http-transport": "^4.3.0"
   },
   "eslintConfig": {
-    "extends": "iplayer-es6",
-    "parserOptions": {
-      "ecmaVersion": 2017
-    }
+    "extends": "iplayer"
   }
 }
