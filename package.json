@@ -4,10 +4,9 @@
   "description": "Provides stats for statsD ",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha && npm run lint",
     "lint": "eslint .",
-    "coverage": "nyc mocha && nyc report --reporter=html && nyc report --reporter=json-summary",
-    "posttest": "npm run lint"
+    "coverage": "nyc mocha && nyc report --reporter=html && nyc report --reporter=json-summary"
   },
   "repository": {
     "type": "git",
