@@ -23,7 +23,7 @@ The following metrics are sent from each client:
 ## Installation
 
 ```
-npm install --save @bbc/http-transport-statsd
+pnpm install --save @bbc/http-transport-statsd
 ```
 
 ## Usage
@@ -46,11 +46,11 @@ console.log(body);
 ## Test
 
 ```
-npm test
+pnpm test
 ```
 
 To generate a test coverage report:
 
 ```
-npm run coverage
+pnpm run coverage
 ```
