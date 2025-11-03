@@ -1,5 +1,5 @@
-[![NPM downloads](https://img.shields.io/npm/dm/@bbc/http-transport-statsd.svg?style=flat)](https://npmjs.org/package/@bbc/http-transport-rate-limiter)
-![npm](https://img.shields.io/npm/v/@bbc/http-transport-statsd.svg)
+[![NPM downloads](https://img.shields.io/pnpm/dm/@bbc/http-transport-statsd.svg?style=flat)](https://npmjs.org/package/@bbc/http-transport-rate-limiter)
+![pnpm](https://img.shields.io/pnpm/v/@bbc/http-transport-statsd.svg)
  ![license](https://img.shields.io/badge/license-MIT-blue.svg) 
 ![github-issues](https://img.shields.io/github/issues/bbc/http-transport-statsd.svg)
 ![stars](https://img.shields.io/github/stars/bbc/http-transport-statsd.svg)
@@ -23,7 +23,7 @@ The following metrics are sent from each client:
 ## Installation
 
 ```
-npm install --save @bbc/http-transport-statsd
+pnpm install --save @bbc/http-transport-statsd
 ```
 
 ## Usage
@@ -46,11 +46,11 @@ console.log(body);
 ## Test
 
 ```
-npm test
+pnpm test
 ```
 
 To generate a test coverage report:
 
 ```
-npm run coverage
+pnpm run coverage
 ```
