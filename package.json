@@ -4,9 +4,14 @@
   "description": "Provides stats for statsD ",
   "main": "index.js",
   "scripts": {
-    "test": "mocha && pnpm run lint",
+    "test": "jest && pnpm run lint",
     "lint": "eslint .",
-    "coverage": "nyc mocha && nyc report --reporter=html && nyc report --reporter=json-summary"
+    "coverage": "jest --coverage"
+  },
+  "jest": {
+    "testMatch": [
+      "<rootDir>/test/**/*.js"
+    ]
   },
   "repository": {
     "type": "git",
@@ -17,7 +22,7 @@
     "url": "https://github.com/bbc/http-transport-statsd/issues"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=24.0.0"
   },
   "keywords": [
     "https",
@@ -31,19 +36,19 @@
   "homepage": "https://github.com/bbc/http-transport-statsd",
   "devDependencies": {
     "@bbc/http-transport": "^4.3.0",
-    "chai": "^4.1.2",
     "eslint": "^8.50.0",
     "eslint-config-iplayer": "^7.0.0",
-    "mocha": "^5.2.0",
-    "nock": "^13.3.3",
-    "nyc": "^14.1.1",
-    "sinon": "^7.2.3"
+    "jest": "^30.2.0",
+    "nock": "^13.3.3"
   },
   "peerDependencies": {
     "@bbc/http-transport": "^3 || ^4"
   },
   "eslintConfig": {
     "extends": "iplayer",
+    "env": {
+      "jest": true
+    },
     "parserOptions": {
       "ecmaVersion": "latest"
     }
