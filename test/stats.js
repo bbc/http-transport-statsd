@@ -1,5 +1,3 @@
-'use strict';
-
 const nock = require('nock');
 
 const HttpTransport = require('@bbc/http-transport');
@@ -79,7 +77,9 @@ describe('stats', () => {
       .use(stats(stubbedStats, 'my-client', 'feedName'))
       .asBody();
 
-    expect(stubbedStats.increment).toHaveBeenCalledWith('my-client.feedName.requests');
+    expect(stubbedStats.increment).toHaveBeenCalledWith(
+      'my-client.feedName.requests'
+    );
   });
 
   it('increments counter response for each response', async () => {
@@ -90,7 +90,9 @@ describe('stats', () => {
       .use(stats(stubbedStats, 'my-client', 'feedName'))
       .asBody();
 
-    expect(stubbedStats.increment).toHaveBeenCalledWith('my-client.feedName.responses.200');
+    expect(stubbedStats.increment).toHaveBeenCalledWith(
+      'my-client.feedName.responses.200'
+    );
   });
 
   it('increments counter for errors', async () => {
@@ -102,8 +104,10 @@ describe('stats', () => {
         .use(toError())
         .get(url)
         .asBody();
-    } catch (err) {
-      expect(stubbedStats.increment).toHaveBeenCalledWith('my-client.feedName.request_errors');
+    } catch {
+      expect(stubbedStats.increment).toHaveBeenCalledWith(
+        'my-client.feedName.request_errors'
+      );
       expect(stubbedStats.increment).toHaveBeenCalledTimes(1);
       return;
     }
@@ -123,7 +127,10 @@ describe('stats', () => {
       .get(url)
       .asBody();
 
-    const calls = getCallsWith(stubbedStats.increment, 'my-client.feedName.retries');
+    const calls = getCallsWith(
+      stubbedStats.increment,
+      'my-client.feedName.retries'
+    );
     expect(calls).toBe(retries);
   });
 
@@ -140,8 +147,17 @@ describe('stats', () => {
       .get(url)
       .asBody();
 
-    expect(stubbedStats.timing).toHaveBeenCalledWith('my-client.feedName.attempts', 1);
-    expect(stubbedStats.timing).toHaveBeenCalledWith('my-client.feedName.attempts', 2);
-    expect(stubbedStats.timing).toHaveBeenCalledWith('my-client.feedName.attempts', 3);
+    expect(stubbedStats.timing).toHaveBeenCalledWith(
+      'my-client.feedName.attempts',
+      1
+    );
+    expect(stubbedStats.timing).toHaveBeenCalledWith(
+      'my-client.feedName.attempts',
+      2
+    );
+    expect(stubbedStats.timing).toHaveBeenCalledWith(
+      'my-client.feedName.attempts',
+      3
+    );
   });
 });
