@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@bbc/http-transport':
-        specifier: ^5.0.0
-        version: 5.0.0
+        specifier: ^5.0.1
+        version: 5.0.1
       '@biomejs/biome':
         specifier: ^2.2.4
         version: 2.5.14
@@ -210,8 +210,8 @@ packages:
     resolution: {integrity: sha512-Vj1jF3cPfxg7OAfoI7QnVKLoILlm2JF9pnVHrX8qx7AHMiYWT+NDAA7jChlNgRS4WTLc/fD1lXLmPixluj+3Gg==}
     engines: {node: '>=6.9.0'}
 
-  '@bbc/http-transport@5.0.0':
-    resolution: {integrity: sha512-Hc/gsMDUNRGtgToEgdbI3/oK7MNqFRMGzZ5hrrZxGXg22K7YQA1Mx4y6W06NP5f/idlj2toY7EViW+suv7jGng==}
+  '@bbc/http-transport@5.0.1':
+    resolution: {integrity: sha512-yyKs9fLTtneeDjJBnZB5Vdgj4bQh3YO5g8nAHtqZ+YEOiNOH2fY1Q4PDQAcxsH5Bwa9Z7C36pv8lhMjsrnee9g==}
     engines: {node: '>=24.0.0', pnpm: '>=10'}
 
   '@bcoe/v8-coverage@0.2.3':
@@ -1000,10 +1000,6 @@ packages:
     resolution: {integrity: sha512-NqADB8VjPFLM2V0VvHUewwwsw0ZWBaIdgo+ieHtK3hasLz4qeCRjYcqfB6AQrBggRKppKF8L52/VqdVsO47Dlw==}
     engines: {node: '>= 0.4'}
 
-  hasown@2.0.2:
-    resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
-    engines: {node: '>= 0.4'}
-
   hasown@2.0.4:
     resolution: {integrity: sha512-T2UbfbBEF32wiepXIsMlTW9+dDYC6wMh/t/vYA4tuOMKqWz/n3vr1NFSxQiyP+zk2mXsoMA/i/7qV6LKut1t1A==}
     engines: {node: '>= 0.4'}
@@ -1232,9 +1228,6 @@ packages:
   locate-path@5.0.0:
     resolution: {integrity: sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==}
     engines: {node: '>=8'}
-
-  lodash@4.18.1:
-    resolution: {integrity: sha512-dMInicTPVE8d1e5otfwmmjlxkZoUpiVLwyeTdUsi/Caj/gfzzblBcCE5sRHV/AsjuCmxWrte2TNGSYuCeCq+0Q==}
 
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
@@ -1809,12 +1802,11 @@ snapshots:
       '@babel/helper-string-parser': 7.29.7
       '@babel/helper-validator-identifier': 7.29.7
 
-  '@bbc/http-transport@5.0.0':
+  '@bbc/http-transport@5.0.1':
     dependencies:
       '@types/node-fetch': 2.6.13
       http-proxy-agent: 7.0.2
       koa-compose: 4.1.0
-      lodash: 4.18.1
       node-fetch: 2.7.0
       qs: 6.16.0
     transitivePeerDependencies:
@@ -2582,7 +2574,7 @@ snapshots:
       get-proto: 1.0.1
       gopd: 1.2.0
       has-symbols: 1.1.0
-      hasown: 2.0.2
+      hasown: 2.0.4
       math-intrinsics: 1.1.0
 
   get-package-type@0.1.0: {}
@@ -2620,10 +2612,6 @@ snapshots:
   has-tostringtag@1.0.2:
     dependencies:
       has-symbols: 1.1.0
-
-  hasown@2.0.2:
-    dependencies:
-      function-bind: 1.1.2
 
   hasown@2.0.4:
     dependencies:
@@ -3032,8 +3020,6 @@ snapshots:
   locate-path@5.0.0:
     dependencies:
       p-locate: 4.1.0
-
-  lodash@4.18.1: {}
 
   lru-cache@10.4.3: {}
 
