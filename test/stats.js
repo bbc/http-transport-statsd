@@ -1,9 +1,4 @@
-'use strict';
-
-const sinon = require('sinon');
 const nock = require('nock');
-const assert = require('chai').assert;
-const sandbox = sinon.sandbox.create();
 
 const HttpTransport = require('@bbc/http-transport');
 const stats = require('../lib/stats');
@@ -36,23 +31,20 @@ function nockRetries(retry, opts) {
 }
 
 function getCallsWith(spy, arg) {
-  return spy.getCalls()
-    .filter((call) => {
-      return call.args[0] === arg;
-    }).length;
+  return spy.mock.calls.filter((call) => call[0] === arg).length;
 }
 
 describe('stats', () => {
   let stubbedStats;
 
   beforeEach(() => {
-    stubbedStats = sandbox.stub();
-    stubbedStats.increment = sandbox.stub();
-    stubbedStats.timing = sandbox.stub();
+    stubbedStats = jest.fn();
+    stubbedStats.increment = jest.fn();
+    stubbedStats.timing = jest.fn();
   });
 
   afterEach(() => {
-    sandbox.restore();
+    jest.restoreAllMocks();
   });
 
   it('increments counter http.requests for each request', async () => {
@@ -63,7 +55,7 @@ describe('stats', () => {
       .use(stats(stubbedStats))
       .asBody();
 
-    sinon.assert.calledWith(stubbedStats.increment, 'http.requests');
+    expect(stubbedStats.increment).toHaveBeenCalledWith('http.requests');
   });
 
   it('increments counter a request counter with the name of the client if one is provided', async () => {
@@ -74,7 +66,7 @@ describe('stats', () => {
       .use(stats(stubbedStats, 'my-client'))
       .asBody();
 
-    sinon.assert.calledWith(stubbedStats.increment, 'my-client.requests');
+    expect(stubbedStats.increment).toHaveBeenCalledWith('my-client.requests');
   });
 
   it('increments a request counter with the name of the client and feed if provided', async () => {
@@ -85,7 +77,9 @@ describe('stats', () => {
       .use(stats(stubbedStats, 'my-client', 'feedName'))
       .asBody();
 
-    sinon.assert.calledWith(stubbedStats.increment, 'my-client.feedName.requests');
+    expect(stubbedStats.increment).toHaveBeenCalledWith(
+      'my-client.feedName.requests'
+    );
   });
 
   it('increments counter response for each response', async () => {
@@ -96,7 +90,9 @@ describe('stats', () => {
       .use(stats(stubbedStats, 'my-client', 'feedName'))
       .asBody();
 
-    sinon.assert.calledWith(stubbedStats.increment, 'my-client.feedName.responses.200');
+    expect(stubbedStats.increment).toHaveBeenCalledWith(
+      'my-client.feedName.responses.200'
+    );
   });
 
   it('increments counter for errors', async () => {
@@ -108,19 +104,21 @@ describe('stats', () => {
         .use(toError())
         .get(url)
         .asBody();
-    } catch (err) {
-      sinon.assert.calledWith(stubbedStats.increment, 'my-client.feedName.request_errors');
-      sinon.assert.calledOnce(stubbedStats.increment);
+    } catch {
+      expect(stubbedStats.increment).toHaveBeenCalledWith(
+        'my-client.feedName.request_errors'
+      );
+      expect(stubbedStats.increment).toHaveBeenCalledTimes(1);
       return;
     }
-    assert.fail();
+    throw new Error('Expected the request to fail');
   });
 
   it('increments .retries', async () => {
     const retries = 2;
 
     nockRetries(retries);
-    stubbedStats.increment = sinon.spy();
+    stubbedStats.increment = jest.fn();
 
     await HttpTransport.createClient()
       .use(stats(stubbedStats, 'my-client', 'feedName'))
@@ -129,15 +127,18 @@ describe('stats', () => {
       .get(url)
       .asBody();
 
-    const calls = getCallsWith(stubbedStats.increment, 'my-client.feedName.retries');
-    assert.equal(calls, retries);
+    const calls = getCallsWith(
+      stubbedStats.increment,
+      'my-client.feedName.retries'
+    );
+    expect(calls).toBe(retries);
   });
 
   it('increments .attempts', async () => {
     const retries = 2;
 
     nockRetries(retries);
-    stubbedStats.timing = sinon.spy();
+    stubbedStats.timing = jest.fn();
 
     await HttpTransport.createClient()
       .use(stats(stubbedStats, 'my-client', 'feedName'))
@@ -146,8 +147,17 @@ describe('stats', () => {
       .get(url)
       .asBody();
 
-    sinon.assert.calledWith(stubbedStats.timing, 'my-client.feedName.attempts', 1);
-    sinon.assert.calledWith(stubbedStats.timing, 'my-client.feedName.attempts', 2);
-    sinon.assert.calledWith(stubbedStats.timing, 'my-client.feedName.attempts', 3);
+    expect(stubbedStats.timing).toHaveBeenCalledWith(
+      'my-client.feedName.attempts',
+      1
+    );
+    expect(stubbedStats.timing).toHaveBeenCalledWith(
+      'my-client.feedName.attempts',
+      2
+    );
+    expect(stubbedStats.timing).toHaveBeenCalledWith(
+      'my-client.feedName.attempts',
+      3
+    );
   });
 });

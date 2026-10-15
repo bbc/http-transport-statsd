@@ -1,1 +1,15 @@
+# CI / repo metadata
 .github
+
+# Tests & coverage
+test
+coverage
+
+# Lint & format config
+.eslintignore
+biome.json
+
+# Package manager files
+pnpm-lock.yaml
+pnpm-workspace.yaml
+.npmrc

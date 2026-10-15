@@ -1,4 +1,15 @@
- # This config was generated using ibl-scripts
+
+# Configure pnpm for non-monorepos
+packages:
+  - "."
+catalogMode: manual
+
+## Deps of Deps are isolated
+hoist: false
+
+## pnpm <10 - don't run scripts from dependencies
+ignoreDepScripts: true ## Do not use catalog mode because this is not a monorepo
+# This config was generated using ibl-scripts
 
 # Dependency Resiliency
 
@@ -8,32 +19,13 @@ minimumReleaseAge: 10800
 
 ## Exclude internal packages
 minimumReleaseAgeExclude:
-- '@bbc/*'
-- '@ibl/*'
+  - '@bbc/*'
+  - '@ibl/*'
 
-## pnpm <10 - don't run scripts from dependencies
-ignoreDepScripts: true
-
- ## Do not use catalog mode because this is not a monorepo
-catalogMode: manual
+## Exclusively install the package in CWD.
+recursiveInstall: false
 
 # Package Isolation
 
 ## Specific lockfile per package
 sharedWorkspaceLockfile: false
-
-## Exclusively install the package in CWD.
-recursiveInstall: false
-
-## Deps of Deps are isolated
-hoist: false
-
-# Configure pnpm for non-monorepos
-packages:
-  - "."
-
-# Hoist eslint plugins for compatibility
-publicHoistPattern:
-  - "eslint-plugin-*"
-  - "@eslint/*"
-  - "@typescript-eslint/*"
