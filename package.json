@@ -38,7 +38,7 @@
     "@bbc/http-transport": "^5.0.1",
     "@biomejs/biome": "^2.2.4",
     "jest": "^30.2.0",
-    "nock": "^13.3.3"
+    "nock": "^15.0.1"
   },
   "peerDependencies": {
     "@bbc/http-transport": "^5.0.0"
